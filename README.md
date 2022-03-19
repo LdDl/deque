@@ -1,19 +1,24 @@
 # deque
 
-[![GoDoc](https://pkg.go.dev/badge/github.com/gammazero/deque)](https://pkg.go.dev/github.com/gammazero/deque)
-[![Build Status](https://github.com/gammazero/deque/actions/workflows/go.yml/badge.svg)](https://github.com/gammazero/deque/actions/workflows/go.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gammazero/deque)](https://goreportcard.com/report/github.com/gammazero/deque)
-[![codecov](https://codecov.io/gh/gammazero/deque/branch/master/graph/badge.svg)](https://codecov.io/gh/gammazero/deque)
+[![GoDoc](https://pkg.go.dev/badge/github.com/LdDl/deque)](https://pkg.go.dev/github.com/LdDl/deque)
+[![Go Report Card](https://goreportcard.com/badge/github.com/LdDl/deque)](https://goreportcard.com/report/github.com/LdDl/deque)
+[![codecov](https://codecov.io/gh/LdDl/deque/branch/master/graph/badge.svg)](https://codecov.io/gh/LdDl/deque)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+Fork of [gammazero's deque](https://github.com/gammazero/deque)
 
 Fast ring-buffer deque ([double-ended queue](https://en.wikipedia.org/wiki/Double-ended_queue)) implementation.
 
-For a pictorial description, see the [Deque diagram](https://github.com/gammazero/deque/wiki)
+For a pictorial description, see the [Deque diagram](https://github.com/LdDl/deque/wiki)
+
+## Important note
+
+This package intended to work with only Go's version of 1.18 and above
 
 ## Installation
 
-```
-$ go get github.com/gammazero/deque
+```shell
+$ go get github.com/LdDl/deque
 ```
 
 ## Deque data structure
@@ -39,7 +44,7 @@ package main
 
 import (
     "fmt"
-    "github.com/gammazero/deque"
+    "github.com/LdDl/deque"
 )
 
 func main() {
