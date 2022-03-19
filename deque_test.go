@@ -7,14 +7,14 @@ import (
 )
 
 func TestEmpty(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 	if q.Len() != 0 {
 		t.Error("q.Len() =", q.Len(), "expect 0")
 	}
 	if q.Cap() != 0 {
 		t.Error("expected q.Cap() == 0")
 	}
-	idx := q.Index(func(item interface{}) bool {
+	idx := q.Index(func(item int) bool {
 		return true
 	})
 	if idx != -1 {
@@ -23,7 +23,7 @@ func TestEmpty(t *testing.T) {
 }
 
 func TestNil(t *testing.T) {
-	var q *Deque
+	var q *Deque[int]
 	if q.Len() != 0 {
 		t.Error("expected q.Len() == 0")
 	}
@@ -31,7 +31,7 @@ func TestNil(t *testing.T) {
 		t.Error("expected q.Cap() == 0")
 	}
 	q.Rotate(5)
-	idx := q.Index(func(item interface{}) bool {
+	idx := q.Index(func(item int) bool {
 		return true
 	})
 	if idx != -1 {
@@ -40,7 +40,7 @@ func TestNil(t *testing.T) {
 }
 
 func TestFrontBack(t *testing.T) {
-	var q Deque
+	var q Deque[string]
 	q.PushBack("foo")
 	q.PushBack("bar")
 	q.PushBack("baz")
@@ -73,7 +73,7 @@ func TestFrontBack(t *testing.T) {
 }
 
 func TestGrowShrinkBack(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 	size := minCapacity * 2
 
 	for i := 0; i < size; i++ {
@@ -103,7 +103,7 @@ func TestGrowShrinkBack(t *testing.T) {
 }
 
 func TestGrowShrinkFront(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 	size := minCapacity * 2
 
 	for i := 0; i < size; i++ {
@@ -133,7 +133,7 @@ func TestGrowShrinkFront(t *testing.T) {
 }
 
 func TestSimple(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	for i := 0; i < minCapacity; i++ {
 		q.PushBack(i)
@@ -168,7 +168,7 @@ func TestSimple(t *testing.T) {
 }
 
 func TestBufferWrap(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	for i := 0; i < minCapacity; i++ {
 		q.PushBack(i)
@@ -188,7 +188,7 @@ func TestBufferWrap(t *testing.T) {
 }
 
 func TestBufferWrapReverse(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	for i := 0; i < minCapacity; i++ {
 		q.PushFront(i)
@@ -207,7 +207,7 @@ func TestBufferWrapReverse(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	if q.Len() != 0 {
 		t.Error("empty queue length not 0")
@@ -228,7 +228,7 @@ func TestLen(t *testing.T) {
 }
 
 func TestBack(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	for i := 0; i < minCapacity+5; i++ {
 		q.PushBack(i)
@@ -240,7 +240,7 @@ func TestBack(t *testing.T) {
 
 func TestNew(t *testing.T) {
 	minCap := 64
-	q := New(0, minCap)
+	q := New[string](0, minCap)
 	if q.Cap() != 0 {
 		t.Fatal("should not have allowcated mem yet")
 	}
@@ -254,7 +254,7 @@ func TestNew(t *testing.T) {
 	}
 
 	curCap := 128
-	q = New(curCap, minCap)
+	q = New[string](curCap, minCap)
 	if q.Cap() != curCap {
 		t.Fatalf("Cap() should return %d, got %d", curCap, q.Cap())
 	}
@@ -268,7 +268,7 @@ func TestNew(t *testing.T) {
 }
 
 func checkRotate(t *testing.T, size int) {
-	var q Deque
+	var q Deque[int]
 	for i := 0; i < size; i++ {
 		q.PushBack(i)
 	}
@@ -302,7 +302,7 @@ func TestRotate(t *testing.T) {
 	checkRotate(t, minCapacity)
 	checkRotate(t, minCapacity+minCapacity/2)
 
-	var q Deque
+	var q Deque[int]
 	for i := 0; i < 10; i++ {
 		q.PushBack(i)
 	}
@@ -327,7 +327,7 @@ func TestRotate(t *testing.T) {
 }
 
 func TestAt(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	for i := 0; i < 1000; i++ {
 		q.PushBack(i)
@@ -335,21 +335,21 @@ func TestAt(t *testing.T) {
 
 	// Front to back.
 	for j := 0; j < q.Len(); j++ {
-		if q.At(j).(int) != j {
+		if q.At(j) != j {
 			t.Errorf("index %d doesn't contain %d", j, j)
 		}
 	}
 
 	// Back to front
 	for j := 1; j <= q.Len(); j++ {
-		if q.At(q.Len()-j).(int) != q.Len()-j {
+		if q.At(q.Len()-j) != q.Len()-j {
 			t.Errorf("index %d doesn't contain %d", q.Len()-j, q.Len()-j)
 		}
 	}
 }
 
 func TestSet(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	for i := 0; i < 1000; i++ {
 		q.PushBack(i)
@@ -358,14 +358,14 @@ func TestSet(t *testing.T) {
 
 	// Front to back.
 	for j := 0; j < q.Len(); j++ {
-		if q.At(j).(int) != j+50 {
+		if q.At(j) != j+50 {
 			t.Errorf("index %d doesn't contain %d", j, j+50)
 		}
 	}
 }
 
 func TestClear(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	for i := 0; i < 100; i++ {
 		q.PushBack(i)
@@ -384,7 +384,7 @@ func TestClear(t *testing.T) {
 
 	// Check that there are no remaining references after Clear()
 	for i := 0; i < len(q.buf); i++ {
-		if q.buf[i] != nil {
+		if q.buf[i] != Zero[int]() {
 			t.Error("queue has non-nil deleted elements after Clear()")
 			break
 		}
@@ -392,25 +392,25 @@ func TestClear(t *testing.T) {
 }
 
 func TestIndex(t *testing.T) {
-	var q Deque
+	var q Deque[rune]
 	for _, x := range "Hello, 世界" {
 		q.PushBack(x)
 	}
-	idx := q.Index(func(item interface{}) bool {
-		c := item.(rune)
+	idx := q.Index(func(item rune) bool {
+		c := item
 		return unicode.Is(unicode.Han, c)
 	})
 	if idx != 7 {
 		t.Fatal("Expected index 7, got", idx)
 	}
-	idx = q.Index(func(item interface{}) bool {
-		c := item.(rune)
+	idx = q.Index(func(item rune) bool {
+		c := item
 		return c == 'H'
 	})
 	if idx != 0 {
 		t.Fatal("Expected index 7, got", idx)
 	}
-	idx = q.Index(func(item interface{}) bool {
+	idx = q.Index(func(item rune) bool {
 		return false
 	})
 	if idx != -1 {
@@ -419,7 +419,7 @@ func TestIndex(t *testing.T) {
 }
 
 func TestInsert(t *testing.T) {
-	q := new(Deque)
+	q := new(Deque[rune])
 	for _, x := range "ABCDEFG" {
 		q.PushBack(x)
 	}
@@ -449,72 +449,72 @@ func TestInsert(t *testing.T) {
 		}
 	}
 
-	q = New(16)
+	q2 := New[string](16)
 
-	for i := 0; i < q.Cap(); i++ {
-		q.PushBack(fmt.Sprint(i))
+	for i := 0; i < q2.Cap(); i++ {
+		q2.PushBack(fmt.Sprint(i))
 	}
 	// deque: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
 	// buffer: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-	for i := 0; i < q.Cap()/2; i++ {
-		q.PopFront()
+	for i := 0; i < q2.Cap()/2; i++ {
+		q2.PopFront()
 	}
 	// deque: 8 9 10 11 12 13 14 15
 	// buffer: [_,_,_,_,_,_,_,_,8,9,10,11,12,13,14,15]
-	for i := 0; i < q.Cap()/4; i++ {
-		q.PushBack(fmt.Sprint(q.Cap() + i))
+	for i := 0; i < q2.Cap()/4; i++ {
+		q2.PushBack(fmt.Sprint(q2.Cap() + i))
 	}
 	// deque: 8 9 10 11 12 13 14 15 16 17 18 19
 	// buffer: [16,17,18,19,_,_,_,_,8,9,10,11,12,13,14,15]
 
-	at := q.Len() - 2
-	q.Insert(at, "x")
+	at := q2.Len() - 2
+	q2.Insert(at, "x")
 	// deque: 8 9 10 11 12 13 14 15 16 17 x 18 19
 	// buffer: [16,17,x,18,19,_,_,_,8,9,10,11,12,13,14,15]
-	if q.At(at) != "x" {
+	if q2.At(at) != "x" {
 		t.Error("expected x at position", at)
 	}
-	if q.At(at) != "x" {
+	if q2.At(at) != "x" {
 		t.Error("expected x at position", at)
 	}
 
-	q.Insert(2, "y")
+	q2.Insert(2, "y")
 	// deque: 8 9 y 10 11 12 13 14 15 16 17 x 18 19
 	// buffer: [16,17,x,18,19,_,_,8,9,y,10,11,12,13,14,15]
-	if q.At(2) != "y" {
+	if q2.At(2) != "y" {
 		t.Error("expected y at position 2")
 	}
-	if q.At(at+1) != "x" {
+	if q2.At(at+1) != "x" {
 		t.Error("expected x at position 5")
 	}
 
-	q.Insert(0, "b")
+	q2.Insert(0, "b")
 	// deque: b 8 9 y 10 11 12 13 14 15 16 17 x 18 19
 	// buffer: [16,17,x,18,19,_,b,8,9,y,10,11,12,13,14,15]
-	if q.Front() != "b" {
-		t.Error("expected b inserted at front, got", q.Front())
+	if q2.Front() != "b" {
+		t.Error("expected b inserted at front, got", q2.Front())
 	}
 
-	q.Insert(q.Len(), "e")
-	if q.Cap() != q.Len() {
+	q2.Insert(q2.Len(), "e")
+	if q2.Cap() != q2.Len() {
 		t.Fatal("Expected full buffer")
 	}
 	// deque: b 8 9 y 10 11 12 13 14 15 16 17 x 18 19 e
 	// buffer: [16,17,x,18,19,e,b,8,9,y,10,11,12,13,14,15]
 	for i, x := range []string{"16", "17", "x", "18", "19", "e", "b", "8", "9", "y", "10", "11", "12", "13", "14", "15"} {
-		if q.buf[i] != x {
+		if q2.buf[i] != x {
 			t.Error("expected", x, "at buffer position", i)
 		}
 	}
 	for i, x := range []string{"b", "8", "9", "y", "10", "11", "12", "13", "14", "15", "16", "17", "x", "18", "19", "e"} {
-		if q.PopFront() != x {
+		if q2.PopFront() != x {
 			t.Error("expected", x, "at position", i)
 		}
 	}
 }
 
 func TestRemove(t *testing.T) {
-	q := new(Deque)
+	q := new(Deque[rune])
 	for _, x := range "ABCDEFG" {
 		q.PushBack(x)
 	}
@@ -551,7 +551,7 @@ func TestRemove(t *testing.T) {
 
 func TestFrontBackOutOfRangePanics(t *testing.T) {
 	const msg = "should panic when peeking empty queue"
-	var q Deque
+	var q Deque[int]
 	assertPanics(t, msg, func() {
 		q.Front()
 	})
@@ -571,7 +571,7 @@ func TestFrontBackOutOfRangePanics(t *testing.T) {
 }
 
 func TestPopFrontOutOfRangePanics(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	assertPanics(t, "should panic when removing empty queue", func() {
 		q.PopFront()
@@ -586,7 +586,7 @@ func TestPopFrontOutOfRangePanics(t *testing.T) {
 }
 
 func TestPopBackOutOfRangePanics(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	assertPanics(t, "should panic when removing empty queue", func() {
 		q.PopBack()
@@ -601,7 +601,7 @@ func TestPopBackOutOfRangePanics(t *testing.T) {
 }
 
 func TestAtOutOfRangePanics(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	q.PushBack(1)
 	q.PushBack(2)
@@ -617,7 +617,7 @@ func TestAtOutOfRangePanics(t *testing.T) {
 }
 
 func TestSetOutOfRangePanics(t *testing.T) {
-	var q Deque
+	var q Deque[int]
 
 	q.PushBack(1)
 	q.PushBack(2)
@@ -633,7 +633,7 @@ func TestSetOutOfRangePanics(t *testing.T) {
 }
 
 func TestInsertOutOfRangePanics(t *testing.T) {
-	q := new(Deque)
+	q := new(Deque[string])
 
 	assertPanics(t, "should panic when inserting out of range", func() {
 		q.Insert(1, "X")
@@ -651,7 +651,7 @@ func TestInsertOutOfRangePanics(t *testing.T) {
 }
 
 func TestRemoveOutOfRangePanics(t *testing.T) {
-	q := new(Deque)
+	q := new(Deque[string])
 
 	assertPanics(t, "should panic when removing from empty queue", func() {
 		q.Remove(0)
@@ -669,7 +669,7 @@ func TestRemoveOutOfRangePanics(t *testing.T) {
 }
 
 func TestSetMinCapacity(t *testing.T) {
-	var q Deque
+	var q Deque[string]
 	exp := uint(8)
 	q.SetMinCapacity(exp)
 	q.PushBack("A")
@@ -703,21 +703,21 @@ func assertPanics(t *testing.T, name string, f func()) {
 }
 
 func BenchmarkPushFront(b *testing.B) {
-	var q Deque
+	var q Deque[int]
 	for i := 0; i < b.N; i++ {
 		q.PushFront(i)
 	}
 }
 
 func BenchmarkPushBack(b *testing.B) {
-	var q Deque
+	var q Deque[int]
 	for i := 0; i < b.N; i++ {
 		q.PushBack(i)
 	}
 }
 
 func BenchmarkSerial(b *testing.B) {
-	var q Deque
+	var q Deque[int]
 	for i := 0; i < b.N; i++ {
 		q.PushBack(i)
 	}
@@ -727,7 +727,7 @@ func BenchmarkSerial(b *testing.B) {
 }
 
 func BenchmarkSerialReverse(b *testing.B) {
-	var q Deque
+	var q Deque[int]
 	for i := 0; i < b.N; i++ {
 		q.PushFront(i)
 	}
@@ -737,7 +737,7 @@ func BenchmarkSerialReverse(b *testing.B) {
 }
 
 func BenchmarkRotate(b *testing.B) {
-	q := new(Deque)
+	q := new(Deque[int])
 	for i := 0; i < b.N; i++ {
 		q.PushBack(i)
 	}
@@ -749,7 +749,7 @@ func BenchmarkRotate(b *testing.B) {
 }
 
 func BenchmarkInsert(b *testing.B) {
-	q := new(Deque)
+	q := new(Deque[int])
 	for i := 0; i < b.N; i++ {
 		q.PushBack(i)
 	}
@@ -760,7 +760,7 @@ func BenchmarkInsert(b *testing.B) {
 }
 
 func BenchmarkRemove(b *testing.B) {
-	q := new(Deque)
+	q := new(Deque[int])
 	for i := 0; i < b.N; i++ {
 		q.PushBack(i)
 	}
@@ -771,7 +771,7 @@ func BenchmarkRemove(b *testing.B) {
 }
 
 func BenchmarkYoyo(b *testing.B) {
-	var q Deque
+	var q Deque[int]
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < 65536; j++ {
 			q.PushBack(j)
@@ -783,7 +783,7 @@ func BenchmarkYoyo(b *testing.B) {
 }
 
 func BenchmarkYoyoFixed(b *testing.B) {
-	var q Deque
+	var q Deque[int]
 	q.SetMinCapacity(16)
 	for i := 0; i < b.N; i++ {
 		for j := 0; j < 65536; j++ {
