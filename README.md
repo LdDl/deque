@@ -1,6 +1,7 @@
 # deque
 
 [![GoDoc](https://pkg.go.dev/badge/github.com/LdDl/deque)](https://pkg.go.dev/github.com/LdDl/deque)
+[![Build Status](https://github.com/LdDl/deque/actions/workflows/go.yml/badge.svg)](https://github.com/LdDl/deque/actions/workflows/go.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/LdDl/deque)](https://goreportcard.com/report/github.com/LdDl/deque)
 [![codecov](https://codecov.io/gh/LdDl/deque/branch/master/graph/badge.svg)](https://codecov.io/gh/LdDl/deque)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -13,7 +14,9 @@ For a pictorial description, see the [Deque diagram](https://github.com/LdDl/deq
 
 ## Important note
 
-This package intended to work with only Go's version of 1.18 and above
+This package intended to work with only Go's version of 1.18 and above (due the usage of generics).
+
+You can read corresponding information here: https://tip.golang.org/doc/go1.18
 
 ## Installation
 
