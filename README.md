@@ -1,4 +1,4 @@
-# deque
+# Deque for generics
 
 [![GoDoc](https://pkg.go.dev/badge/github.com/LdDl/deque)](https://pkg.go.dev/github.com/LdDl/deque)
 [![Build Status](https://github.com/LdDl/deque/actions/workflows/go.yml/badge.svg)](https://github.com/LdDl/deque/actions/workflows/go.yml)
