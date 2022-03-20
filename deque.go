@@ -135,7 +135,7 @@ func (q *Deque[T]) PopBack() T {
 
 // Front returns the element at the front of the queue.
 // This is the element that would be returned by PopFront().  This call panics if the queue is empty.
-func (q *Deque[T]) Front() interface{} {
+func (q *Deque[T]) Front() T {
 	if q.count <= 0 {
 		panic("deque: Front() called when empty")
 	}
@@ -144,7 +144,7 @@ func (q *Deque[T]) Front() interface{} {
 
 // Back returns the element at the back of the queue.
 // This is the element that would be returned by PopBack().  This call panics if the queue is empty.
-func (q *Deque[T]) Back() interface{} {
+func (q *Deque[T]) Back() T {
 	if q.count <= 0 {
 		panic("deque: Back() called when empty")
 	}
@@ -302,7 +302,7 @@ func (q *Deque[T]) Insert(at int, item T) {
 // not for operations in the the middle.  Complexity of this function is
 // constant plus linear in the lesser of the distances between the index and
 // either of the ends of the queue.
-func (q *Deque[T]) Remove(at int) interface{} {
+func (q *Deque[T]) Remove(at int) T {
 	if at < 0 || at >= q.Len() {
 		panic("deque: Remove() called with index out of range")
 	}

@@ -139,10 +139,10 @@ func TestSimple(t *testing.T) {
 		q.PushBack(i)
 	}
 	if q.Front() != 0 {
-		t.Fatalf("expected 0 at front, got %d", q.Front().(int))
+		t.Fatalf("expected 0 at front, got %d", q.Front())
 	}
 	if q.Back() != minCapacity-1 {
-		t.Fatalf("expected %d at back, got %d", minCapacity-1, q.Back().(int))
+		t.Fatalf("expected %d at back, got %d", minCapacity-1, q.Back())
 	}
 
 	for i := 0; i < minCapacity; i++ {
@@ -180,7 +180,7 @@ func TestBufferWrap(t *testing.T) {
 	}
 
 	for i := 0; i < minCapacity; i++ {
-		if q.Front().(int) != i+3 {
+		if q.Front() != i+3 {
 			t.Error("peek", i, "had value", q.Front())
 		}
 		q.PopFront()
@@ -199,7 +199,7 @@ func TestBufferWrapReverse(t *testing.T) {
 	}
 
 	for i := 0; i < minCapacity; i++ {
-		if q.Back().(int) != i+3 {
+		if q.Back() != i+3 {
 			t.Error("peek", i, "had value", q.Front())
 		}
 		q.PopBack()
@@ -285,13 +285,13 @@ func checkRotate(t *testing.T, size int) {
 			}
 		}
 		q.Rotate(1)
-		if q.Back().(int) != i {
+		if q.Back() != i {
 			t.Fatal("wrong value during rotation")
 		}
 	}
 	for i := q.Len() - 1; i >= 0; i-- {
 		q.Rotate(-1)
-		if q.Front().(int) != i {
+		if q.Front() != i {
 			t.Fatal("wrong value during reverse rotation")
 		}
 	}
